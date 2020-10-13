@@ -2,20 +2,31 @@
 
 char nome[3][20];
 char email[3][30];
-char arquivo[100];
 
 void insert(){
     FILE * pFile;
-    printf("Informe o arquivo, com caminho, em que deseja escrever: \n");
-    scanf("%s", &arquivo);
-    pFile = fopen(arquivo , "w");
+    pFile = fopen("lista.txt" , "w");
 
     printf("Digite o primeiro nome: ");
-    scanf("%s", &nome[1]);
-    fputs(nome[1], pFile);
+    gets( nome[0]);
+    fwrite(nome[0], 1, sizeof(nome[0]), pFile);
     printf("Digite o primeiro email: ");
-    scanf("%s", &email[1]);
-    fputs(email[1], pFile);
+    gets( email[0]);
+    fwrite(email[0], 1, sizeof(email[0]), pFile);
+
+    printf("Digite o segundo nome: ");
+    gets( nome[1]);
+    fwrite(nome[1], 1, sizeof(nome[1]), pFile);
+    printf("Digite o segundo email: ");
+    gets( email[1]);
+    fwrite(email[1], 1, sizeof(email[1]), pFile);
+
+    printf("Digite o terceiro nome: ");
+    gets( nome[2]);
+    fwrite(nome[2], 1, sizeof(nome[2]), pFile);
+    printf("Digite o terceiro email: ");
+    gets( email[2]);
+    fwrite(email[2], 1, sizeof(email[2]), pFile);
 
     fclose(pFile);
 }
@@ -29,6 +40,7 @@ main(){
     do{
         printf("Digite: \n\t1. Inserir dados.\n\t2. Listar todos os dados na tela.\n\t3. Pesquisar um nome e mostrar na tela\n\t4. Pesquisar os nomes pela primeira letra e mostrar todos na tela.\n\t5. Alterar dados.\n\t6. Exclui dados.\n\t7. Sair\n");
         scanf("%i", &menu);
+        getchar();
         switch(menu){
             case 1:
                 menu = 0;
