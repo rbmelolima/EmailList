@@ -22,7 +22,21 @@ void insert()
     fclose(pFile);
 }
 
-void list() {}
+void list() {
+    FILE * pFile;
+    pFile = fopen("lista.txt", "r");
+
+    printf("Lista de emails:\n");
+
+    for(int i = 0; i < 3; ++i){
+        fread(&nome[i], 1, sizeof(nome[i]),pFile);
+        printf("\t%s -", nome[i]);
+        fread(&email[i], 1, sizeof(email[i]),pFile);
+        printf(" %s\n", email[i]);
+    }
+
+    fclose(pFile);
+}
 
 void searchName() {}
 
