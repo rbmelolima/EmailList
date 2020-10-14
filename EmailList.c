@@ -1,69 +1,87 @@
-#include<stdio.h>
+#include <stdio.h>
 
 char nome[3][20];
 char email[3][30];
 
-void insert(){
-    FILE * pFile;
-    pFile = fopen("lista.txt" , "w");
+void insert()
+{
+    FILE *pFile;
+    pFile = fopen("lista.txt", "w");
+  
+    for (int i = 0; i < 3; i++)
+    {
+        printf("\nDigite o %iº email: ", i + 1);
+        gets(email[i]);
+        fwrite(email[i], 1, sizeof(email[i]), pFile);
 
-    printf("Digite o primeiro nome: ");
-    gets( nome[0]);
-    fwrite(nome[0], 1, sizeof(nome[0]), pFile);
-    printf("Digite o primeiro email: ");
-    gets( email[0]);
-    fwrite(email[0], 1, sizeof(email[0]), pFile);
-
-    printf("Digite o segundo nome: ");
-    gets( nome[1]);
-    fwrite(nome[1], 1, sizeof(nome[1]), pFile);
-    printf("Digite o segundo email: ");
-    gets( email[1]);
-    fwrite(email[1], 1, sizeof(email[1]), pFile);
-
-    printf("Digite o terceiro nome: ");
-    gets( nome[2]);
-    fwrite(nome[2], 1, sizeof(nome[2]), pFile);
-    printf("Digite o terceiro email: ");
-    gets( email[2]);
-    fwrite(email[2], 1, sizeof(email[2]), pFile);
+        printf("Digite o %iº nome: ", i + 1);
+        gets(nome[i]);
+        fwrite(nome[i], 1, sizeof(nome[i]), pFile);
+    }
 
     fclose(pFile);
 }
-void list(){}
-void searchName(){}
-void searchLetter(){}
-void alter(){}
-void del(){}
-main(){
+
+void list() {}
+
+void searchName() {}
+
+void searchLetter() {}
+
+void alter() {}
+
+void del() {}
+
+void main()
+{
     int menu = 0;
-    do{
-        printf("Digite: \n\t1. Inserir dados.\n\t2. Listar todos os dados na tela.\n\t3. Pesquisar um nome e mostrar na tela\n\t4. Pesquisar os nomes pela primeira letra e mostrar todos na tela.\n\t5. Alterar dados.\n\t6. Exclui dados.\n\t7. Sair\n");
+    do
+    {
+        printf("\n\n\n\n");
+        printf("******************** \n");
+        printf("**** EMAIL LIST **** \n");
+        printf("******************** \n");
+
+        printf("\n(1) Inserir dados");
+        printf("\n(2) Listar dados");
+        printf("\n(3) Pesquisar um nome");
+        printf("\n(4) Pesquisar os nomes pela primeira letra");
+        printf("\n(5) Alterar dados");
+        printf("\n(6) Excluir dados");
+        printf("\n(7) Sair");
+        printf("\n\n-> Digite sua ação: ");
+
         scanf("%i", &menu);
         getchar();
-        switch(menu){
-            case 1:
-                menu = 0;
-                insert();
-            case 2:
-                menu = 0;
-                list();
-            case 3:
-                menu = 0;
-                searchName();
-            case 4:
-                menu = 0;
-                searchLetter();
-            case 5:
-                menu = 0;
-                alter();
-            case 6:
-                menu = 0;
-                del();
-            case 7:
-                break;
-            default:
-                menu = 0;
+
+        switch (menu)
+        {
+        case 1:
+            menu = 0;
+            insert();
+            break;
+        case 2:
+            menu = 0;
+            list();
+        case 3:
+            menu = 0;
+            searchName();
+        case 4:
+            menu = 0;
+            searchLetter();
+        case 5:
+            menu = 0;
+            alter();
+        case 6:
+            menu = 0;
+            del();
+
+        case 7:
+        default:
+            menu = 1;
+            break;
         }
-    }while(menu == 0);
+
+    } while (menu == 0);
+    
 }
