@@ -30,9 +30,8 @@ void list() {
 
     for(int i = 0; i < 3; ++i){
         fread(&nome[i], 1, sizeof(nome[i]),pFile);
-        printf("\t%s -", nome[i]);
         fread(&email[i], 1, sizeof(email[i]),pFile);
-        printf(" %s\n", email[i]);
+        printf("\t%s - %s\n", nome[i], email[i]);
     }
 
     fclose(pFile);
@@ -77,6 +76,7 @@ void main()
         case 2:
             menu = 0;
             list();
+            break;
         case 3:
             menu = 0;
             searchName();
