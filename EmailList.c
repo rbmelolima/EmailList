@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 char nome[3][20];
 char email[3][30];
@@ -7,8 +8,9 @@ char filename[] = "lista.txt";
 void loadContent() {
     FILE *pFile;
     pFile = fopen(filename, "r");
+    int i = 0;
 
-    for (int i = 0; i < 3; ++i)
+    for (i = 0; i < 3; ++i)
     {
         fread(&nome[i], 1, sizeof(nome[i]), pFile);
         fread(&email[i], 1, sizeof(email[i]), pFile);
@@ -21,8 +23,9 @@ void insert()
 {
     FILE *pFile;
     pFile = fopen(filename, "w");
+    int i = 0;
 
-    for (int i = 0; i < 3; i++)
+    for (i = 0; i < 3; i++)
     {
         printf("\n\nDigite o %iº nome: ", i + 1);
         gets(nome[i]);
@@ -40,14 +43,17 @@ void list()
 {
     FILE *pFile;
     pFile = fopen(filename, "r");
+    int i = 0;
 
     printf("\n\tDados atuais:\n");
 
-    for (int i = 0; i < 3; ++i)
+    for (i = 0; i < 3; ++i)
     {
         fread(&nome[i], 1, sizeof(nome[i]), pFile);
         fread(&email[i], 1, sizeof(email[i]), pFile);
-        printf("\t%s - %s\n", nome[i], email[i]);
+        if(nome[i] != NULL){
+        	printf("\t%s - %s\n", nome[i], email[i]);
+		}
     }
 
     fclose(pFile);
@@ -60,35 +66,37 @@ void searchName() {
     loadContent();
 
     char nameText[20];
-    int countNotFound = 0;
 
     printf("\n\nPesquisar nome: ");
     gets(nameText);
 
-    int finded;
+    int finded = -1;
+    int i = 0;
+    int j = 0;
 
-    for(int i = 0; i < 3; i++){
+    for(i = 0; i < 3; i++){
         finded = 1;
 
-        for(int j = 0; j < 20 && (nameText[j] != '\0' || nome[i][j] != '\0'); j++) {
-            if (nameText[j] != nome[i][j]){
-                finded = 0;
+        for(j = 0; j < 20 && (nameText[j] != '\0' || nome[i][j] != '\0'); j++) {
+            if (nameText[j] == nome[i][j]){
+                finded = i;
                 break;
             }
         }
-
-        if(finded){
-            printf("\n$ Nome: %s \tEmail: %s", nome[i], email[i]);
+        
+        if(finded != -1){
+            break;    
         }
 
-        else {
-            countNotFound++;
-        }
     }
 
-    if(countNotFound == 3) {
-        printf("\n$ Nenhum registro foi encontrado.");
+    if(finded == -1) {
+        printf("\n$ Nenhum registro foi encontrado.");    
     }
+    
+    else{
+    	printf("\n$ Nome: %s \tEmail: %s", nome[finded], email[finded]);
+	}
 
     printf("\n\nPressione qualquer coisa para voltar ao menu... ");
     getch();
@@ -104,8 +112,9 @@ void searchLetter() {
     letter = getchar();
 
     int finded;
+    int i = 0;
 
-    for(int i = 0; i < 3; i++){
+    for(i = 0; i < 3; i++){
         finded = 1;
 
         if(nome[i][0] == letter){
@@ -125,9 +134,108 @@ void searchLetter() {
     getch();
 }
 
-void updateRegister() {}
+void updateRegister() {
+    loadContent();
 
-void deleteRegister() {}
+    char nameText[20];
+
+    printf("\n\nPesquisar nome: ");
+    gets(nameText);
+
+    int finded = -1;
+    int i = 0;
+    int j = 0;
+
+    for(i = 0; i < 3; i++){
+
+        for(j = 0; j < 20 && (nameText[j] != '\0' || nome[i][j] != '\0'); j++) {
+            if (nameText[j] == nome[i][j]){
+                finded = i;
+                break;
+            }
+        }
+
+        if(finded != -1){
+            break;    
+        }
+    }
+
+    if(finded == -1) {
+        printf("\n$ Nenhum registro foi encontrado.");    
+    }
+
+    else{
+        printf("\n$ Nome: %s \tEmail: %s", nome[finded], email[finded]);
+
+        printf("\n\nDigite o novo nome: ");
+        gets(nome[finded]);
+
+        printf("\nDigite o novo e-mail: ");
+        gets(email[finded]);
+
+        FILE *pFile;
+        pFile = fopen(filename, "r+");
+        fseek(pFile, 50*finded, SEEK_SET);
+        fwrite(nome[finded], 1, sizeof(nome[finded]), pFile);
+        fwrite(email[finded], 1, sizeof(email[finded]), pFile);
+        fclose(pFile);
+    }
+
+    printf("\n\nPressione qualquer coisa para voltar ao menu... ");
+    getch();
+
+}
+
+void deleteRegister() {
+	loadContent();
+
+    char nameText[20];
+
+    printf("\n\nPesquisar nome: ");
+    gets(nameText);
+
+    int finded = -1;
+    int i = 0;
+    int j = 0;
+
+    for(i = 0; i < 3; i++){
+
+        for(j = 0; j < 20 && (nameText[j] != '\0' || nome[i][j] != '\0'); j++) {
+            if (nameText[j] == nome[i][j]){
+                finded = i;
+                break;
+            }
+        }
+
+        if(finded != -1){
+            break;    
+        }
+    }
+
+    if(finded == -1) {
+        printf("\n$ Nenhum registro foi encontrado.");    
+    }
+
+    else{
+        printf("\n$ Nome: %s \tEmail: %s", nome[finded], email[finded]);
+
+        FILE *pFile;
+        pFile = fopen(filename, "w");
+        for (i = 0; i < 3; i++)
+	    {
+	    	if(i != finded){
+	    		fwrite(nome[i], 1, sizeof(nome[i]), pFile);
+	        	fwrite(email[i], 1, sizeof(email[i]), pFile);
+			}
+	    }
+        fclose(pFile);
+        
+        printf("\nDados excluidos!");
+    }
+
+    printf("\n\nPressione qualquer coisa para voltar ao menu... ");
+    getch();
+}
 
 void main()
 {
