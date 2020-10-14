@@ -7,7 +7,7 @@ void insert()
 {
     FILE *pFile;
     pFile = fopen("lista.txt", "w");
-  
+
     for (int i = 0; i < 3; i++)
     {
         printf("\nDigite o %iº email: ", i + 1);
@@ -77,11 +77,10 @@ void main()
             del();
 
         case 7:
-        default:
-            menu = 1;
+        default:            
+            exit(0);
             break;
         }
 
     } while (menu == 0);
-    
 }
