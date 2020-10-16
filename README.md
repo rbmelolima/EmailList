@@ -1,3 +1,5 @@
+![Imagem do programa](./images/index.png)
+
 # EmailList
 Programa desafio da disciplina Linguagem de Programação I da Fatec Rubens Lara
 
