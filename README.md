@@ -1,6 +1,6 @@
 ![Imagem do programa](./images/index.png)
 
-# EmailList
+# :page_with_curl: Sobre
 Programa desafio da disciplina Linguagem de Programação I da Fatec Rubens Lara
 
 1 – Pesquise as funções de biblioteca abaixo que manipulam arquivos.
@@ -20,4 +20,15 @@ Na função main() faça um menu com as seguintes funções:
 - Altera dados.
 - Exclui dados.
 - Saída
+
+## :hammer: Instalação
+
+````bash
+# Clone este projeto
+$ git clone https://github.com/rbmelolima/EmailList
+
+# Compile o EmailList.c
+
+# Execute o .exe
+````
 
