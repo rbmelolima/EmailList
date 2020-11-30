@@ -1,7 +1,7 @@
 ![Imagem do programa](./images/index.png)
 
-# :page_with_curl: Sobre
-Programa desafio da disciplina Linguagem de Programação I da Fatec Rubens Lara
+# :page_with_curl: Desafio 1
+Programa desafio da disciplina Linguagem de Programação I da Fatec Rubens Lara.
 
 1 – Pesquise as funções de biblioteca abaixo que manipulam arquivos.
 - fopen();
@@ -21,14 +21,17 @@ Na função main() faça um menu com as seguintes funções:
 - Exclui dados.
 - Saída
 
+
+# :page_with_curl: Desafio 2
+Programa desafio da disciplina Linguagem de Programação I da Fatec Rubens Lara.
+
+
 ## :hammer: Instalação
 
 ````bash
 # Clone este projeto
 $ git clone https://github.com/rbmelolima/EmailList
 
-# Compile o EmailList.c
-
-# Execute o .exe
+# Compile o arquivo C que desejar
 ````
 
