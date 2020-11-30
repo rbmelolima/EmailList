@@ -15,26 +15,26 @@ char filename[] = "lista.txt";
 
 
 int toInt(char a[]) {
-    int c, sign, offset, n;
+    int c, sinal, posicao, n;
 
     if (a[0] == '-') {
-        sign = -1;
+        sinal = -1;
     }
 
-    if (sign == -1) {  
-        offset = 1;
+    if (sinal == -1) {  
+        posicao = 1;
     }
     else {
-        offset = 0;
+        posicao = 0;
     }
 
     n = 0;
 
-    for (c = offset; a[c] != '\0'; c++) {
+    for (c = posicao; a[c] != '\0'; c++) {
         n = n * 10 + a[c] - '0';
     }
 
-    if (sign == -1) {
+    if (sinal == -1) {
         n = -n;
     }
 
@@ -42,27 +42,27 @@ int toInt(char a[]) {
 }
 
 float toFloat(char* s){
-    float rez = 0, fact = 1;
-    int point_seen;
+    float f = 0, fator = 1;
+    int posicao_ponto;
     if (*s == '-'){
         s++;
-        fact = -1;
+        fator = -1;
     };
-    for (point_seen = 0; *s; s++){
+    for (posicao_ponto = 0; *s; s++){
         if (*s == '.'){
-	        point_seen = 1; 
+	        posicao_ponto = 1; 
 	        continue;
         };
         int d = *s - '0';
         if (d >= 0 && d <= 9){
-	        if (point_seen) 
+	        if (posicao_ponto) 
 			{
-				fact /= 10.0f;
+				fator /= 10.0f;
 			}
-        rez = rez * 10.0f + (float)d;
+        f = f * 10.0f + (float)d;
         };
     };
-    return rez * fact;
+    return f * fator;
 };
 
 void insert(struct dados *p)
