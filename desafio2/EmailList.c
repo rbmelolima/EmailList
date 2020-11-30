@@ -12,18 +12,58 @@ struct dados {
 
 char filename[] = "lista.txt";
 
-/*void loadContent() {
-    FILE *pFile;
-    pFile = fopen(filename, "r");
 
-    fread(p, sizeof(struct dados), 1, pFile);
-    while(!feof(pFile))
-    {
-        fread(p, sizeof(struct dados), 1, pFile);
+
+int toInt(char a[]) {
+    int c, sign, offset, n;
+
+    if (a[0] == '-') {
+        sign = -1;
     }
 
-    fclose(pFile);
-}*/
+    if (sign == -1) {  
+        offset = 1;
+    }
+    else {
+        offset = 0;
+    }
+
+    n = 0;
+
+    for (c = offset; a[c] != '\0'; c++) {
+        n = n * 10 + a[c] - '0';
+    }
+
+    if (sign == -1) {
+        n = -n;
+    }
+
+    return n;
+}
+
+float toFloat(char* s){
+    float rez = 0, fact = 1;
+    int point_seen;
+    if (*s == '-'){
+        s++;
+        fact = -1;
+    };
+    for (point_seen = 0; *s; s++){
+        if (*s == '.'){
+	        point_seen = 1; 
+	        continue;
+        };
+        int d = *s - '0';
+        if (d >= 0 && d <= 9){
+	        if (point_seen) 
+			{
+				fact /= 10.0f;
+			}
+        rez = rez * 10.0f + (float)d;
+        };
+    };
+    return rez * fact;
+};
 
 void insert(struct dados *p)
 {
@@ -107,7 +147,6 @@ void searchName(struct dados *p) {
             }
             if(finded != 0){
                 printf("\n\t%s - %s - %s - %s/%s/%s\n", p->nome, p->email, p->salario, p->dia, p->mes, p->ano);
-                break;
             }
 		}
         fread(p, sizeof(struct dados), 1, pFile);
@@ -122,102 +161,116 @@ void searchName(struct dados *p) {
     printf("\n\nPressione qualquer coisa para voltar ao menu... ");
     getch();
 }
-/*
-void searchEmail() {
-    loadContent();
 
-    char letter;
-    int countNotFound = 0;
+void searchEmail(struct dados *p) {
 
-    printf("\nDigite uma letra: ");
-    letter = getchar();
+    FILE *pFile;
+    pFile = fopen(filename, "r");
+    char emailText[31];
 
-    int finded;
-    int i = 0;
+    printf("\n\nPesquisar e-mail: ");
+    gets(emailText);
 
-    for(i = 0; i < 3; i++){
-        finded = 1;
+    int finded = 0;
+    int j = 0;
 
-        if(nome[i][0] == letter){
-            printf("\n$ Nome: %s \tEmail: %s", nome[i], email[i]);
-        }
-
-        else {
-            countNotFound++;
-        }
+    fread(p, sizeof(struct dados), 1, pFile);
+    while (!feof(pFile))
+    {
+        if(p->nome != NULL){
+        	for(j = 0; j < 31 && (emailText[j] != '\0' || p->email[j] != '\0'); j++) {
+                if (emailText[j] == p->email[j]){
+                    finded++;
+                }
+                else{
+                    finded = 0;
+                    break;
+                }
+            }
+            if(finded != 0){
+                printf("\n\t%s - %s - %s - %s/%s/%s\n", p->nome, p->email, p->salario, p->dia, p->mes, p->ano);
+            }
+		}
+        fread(p, sizeof(struct dados), 1, pFile);
     }
 
-    if(countNotFound == 3) {
-        printf("\n$ Nenhum registro foi encontrado.");
+    if(finded == 0) {
+        printf("\n\tNenhum registro foi encontrado.");
     }
+
+	fclose(pFile);
 
     printf("\n\nPressione qualquer coisa para voltar ao menu... ");
     getch();
 }
 
-void searchBirthday() {
-    loadContent();
+void searchBirthday(struct dados *p) {
 
-    char letter;
-    int countNotFound = 0;
+    FILE *pFile;
+    pFile = fopen(filename, "r");
+    int mesPesquisa;
 
-    printf("\nDigite uma letra: ");
-    letter = getchar();
+    printf("\n\nPesquisar por mes de aniversario: ");
+    scanf("%d", &mesPesquisa);
 
-    int finded;
-    int i = 0;
+    int finded = 0;
 
-    for(i = 0; i < 3; i++){
-        finded = 1;
-
-        if(nome[i][0] == letter){
-            printf("\n$ Nome: %s \tEmail: %s", nome[i], email[i]);
-        }
-
-        else {
-            countNotFound++;
-        }
+    fread(p, sizeof(struct dados), 1, pFile);
+    while (!feof(pFile))
+    {
+        if(p->nome != NULL){
+            if(mesPesquisa == toInt(p->mes)){ //utilizando função de conversão para comparar com int
+                finded++;
+                printf("\n\t%s - %s - %s - %s/%s/%s\n", p->nome, p->email, p->salario, p->dia, p->mes, p->ano);
+            }
+		}
+        fread(p, sizeof(struct dados), 1, pFile);
     }
 
-    if(countNotFound == 3) {
-        printf("\n$ Nenhum registro foi encontrado.");
+    if(finded == 0) {
+        printf("\n\tNenhum registro foi encontrado.");
     }
+
+	fclose(pFile);
 
     printf("\n\nPressione qualquer coisa para voltar ao menu... ");
     getch();
 }
 
-void searchSalary() {
-    loadContent();
+void searchSalary(struct dados *p) {
+    FILE *pFile;
+    pFile = fopen(filename, "r");
+    float menorSalario, maiorSalario;
 
-    char letter;
-    int countNotFound = 0;
+    printf("\n\nPreencha o menor salario da faixa: ");
+    scanf("%f", &menorSalario);
 
-    printf("\nDigite uma letra: ");
-    letter = getchar();
+    printf("\n\nPreencha o maior salario da faixa: ");
+    scanf("%f", &maiorSalario);
 
-    int finded;
-    int i = 0;
+    int finded = 0;
 
-    for(i = 0; i < 3; i++){
-        finded = 1;
-
-        if(nome[i][0] == letter){
-            printf("\n$ Nome: %s \tEmail: %s", nome[i], email[i]);
-        }
-
-        else {
-            countNotFound++;
-        }
+    fread(p, sizeof(struct dados), 1, pFile);
+    while (!feof(pFile))
+    {
+        if(p->nome != NULL){
+            if(menorSalario <= toFloat(p->salario) && maiorSalario >= toFloat(p->salario)){ //utilizando função de conversão para comparar com float
+                finded++;
+                printf("\n\t%s - %s - %s - %s/%s/%s\n", p->nome, p->email, p->salario, p->dia, p->mes, p->ano);
+            }
+		}
+        fread(p, sizeof(struct dados), 1, pFile);
     }
 
-    if(countNotFound == 3) {
-        printf("\n$ Nenhum registro foi encontrado.");
+    if(finded == 0) {
+        printf("\n\tNenhum registro foi encontrado.");
     }
+
+	fclose(pFile);
 
     printf("\n\nPressione qualquer coisa para voltar ao menu... ");
     getch();
-}*/
+}
 
 void updateSalary(struct dados *p) {
     FILE *pFile;
@@ -419,18 +472,18 @@ void main()
                 menu = 0;
                 searchName(&p);
                 break;
-            /*case 4:
+            case 4:
                 menu = 0;
-                searchEmail();
+                searchEmail(&p);
                 break;
             case 5:
                 menu = 0;
-                searchBirthday();
+                searchBirthday(&p);
                 break;
             case 6:
                 menu = 0;
-                searchSalary();
-                break;*/
+                searchSalary(&p);
+                break;
             case 7:
                 menu = 0;
                 updateSalary(&p);
