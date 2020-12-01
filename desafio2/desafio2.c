@@ -104,7 +104,7 @@ void list(struct dados* p) {
 
   fread(p, sizeof(struct dados), 1, pFile);
   while (!feof(pFile)) {
-    if (p->nome != NULL && p->nome[0] != '\0' ) {
+    if (p->nome != NULL && p->nome[0] != '\0') {
       printf("\t%s - %s - %s - %s/%s/%s\n", p->nome, p->email, p->salario, p->dia, p->mes, p->ano);
     }
     fread(p, sizeof(struct dados), 1, pFile);
@@ -145,13 +145,13 @@ void searchName(struct dados* p) {
       if (finded != 0) {
         printf("\n\t%s - %s - %s - %s/%s/%s\n", p->nome, p->email, p->salario, p->dia, p->mes, p->ano);
       }
+
+      else {
+        printf("\n\tNenhum registro foi encontrado.");
+      }
     }
 
     fread(p, sizeof(struct dados), 1, pFile);
-  }
-
-  if (finded == 0) {
-    printf("\n\tNenhum registro foi encontrado.");
   }
 
   fclose(pFile);
@@ -189,13 +189,13 @@ void searchEmail(struct dados* p) {
       if (finded != 0) {
         printf("\n\t%s - %s - %s - %s/%s/%s\n", p->nome, p->email, p->salario, p->dia, p->mes, p->ano);
       }
+
+      else {
+        printf("\n\tNenhum registro foi encontrado.");
+      }
     }
 
     fread(p, sizeof(struct dados), 1, pFile);
-  }
-
-  if (finded == 0) {
-    printf("\n\tNenhum registro foi encontrado.");
   }
 
   fclose(pFile);
