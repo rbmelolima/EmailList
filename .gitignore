@@ -51,6 +51,7 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
-./lista.txt
+.desafio1/*.txt
+.desafio2/*.txt
 
 .vscode
