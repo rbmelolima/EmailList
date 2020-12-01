@@ -126,6 +126,7 @@ void searchName(struct dados* p) {
 
   int finded = 0;
   int j = 0;
+  int achados = 0;
 
   fread(p, sizeof(struct dados), 1, pFile);
 
@@ -143,16 +144,17 @@ void searchName(struct dados* p) {
       }
 
       if (finded != 0) {
+          achados++;
         printf("\n\t%s - %s - %s - %s/%s/%s\n", p->nome, p->email, p->salario, p->dia, p->mes, p->ano);
-      }
-
-      else {
-        printf("\n\tNenhum registro foi encontrado.");
       }
     }
 
     fread(p, sizeof(struct dados), 1, pFile);
   }
+
+    if(achados == 0){
+        printf("\n\tNenhum registro foi encontrado.");
+    }
 
   fclose(pFile);
 
@@ -170,6 +172,7 @@ void searchEmail(struct dados* p) {
 
   int finded = 0;
   int j = 0;
+  int achados = 0;
 
   fread(p, sizeof(struct dados), 1, pFile);
 
@@ -187,16 +190,16 @@ void searchEmail(struct dados* p) {
       }
 
       if (finded != 0) {
+          achados++;
         printf("\n\t%s - %s - %s - %s/%s/%s\n", p->nome, p->email, p->salario, p->dia, p->mes, p->ano);
-      }
-
-      else {
-        printf("\n\tNenhum registro foi encontrado.");
       }
     }
 
     fread(p, sizeof(struct dados), 1, pFile);
   }
+  if(achados == 0){
+        printf("\n\tNenhum registro foi encontrado.");
+    }
 
   fclose(pFile);
 
@@ -398,7 +401,8 @@ void updateRegister(struct dados* p) {
 }
 
 void cleanArrayChar(char* p, int size) {
-  for (int i = 0; i < size; i++) {
+    int i;
+  for (i = 0; i < size; i++) {
     p[i] = '\0';
   }
 }
