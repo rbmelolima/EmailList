@@ -91,7 +91,7 @@ void insert(struct dados* p) {
 
   printf("Digite o ano do nascimento: ");
   gets(&p->ano);
-  
+
   fwrite(p, sizeof(struct dados), 1, pFile);
   fclose(pFile);
 }
@@ -104,7 +104,7 @@ void list(struct dados* p) {
 
   fread(p, sizeof(struct dados), 1, pFile);
   while (!feof(pFile)) {
-    if (p->nome != NULL) {
+    if (p->nome != NULL && p->nome[0] != '\0' ) {
       printf("\t%s - %s - %s - %s/%s/%s\n", p->nome, p->email, p->salario, p->dia, p->mes, p->ano);
     }
     fread(p, sizeof(struct dados), 1, pFile);
@@ -317,8 +317,6 @@ void updateSalary(struct dados* p) {
     gets(&p->salario);
 
     pFile = fopen(filename, "r+");
-    /* fseek(pFile, sizeof(p->salario) * indice, 0);
-    fwrite(p->salario, sizeof(p->salario), 1, pFile); */
 
     fseek(pFile, sizeof(struct dados) * indice, 0);
     fwrite(p, sizeof(struct dados), 1, pFile);
@@ -451,6 +449,73 @@ void deleteRegister() {
 }
 */
 
+void cleanArrayChar(char* p, int size) {
+  for (int i = 0; i < size; i++) {
+    p[i] = '\0';
+  }
+}
+
+void delete(struct dados* p) {
+  FILE* pFile;
+  pFile = fopen(filename, "r");
+  char nameText[21];
+
+  printf("\n\nPesquisar nome: ");
+  gets(nameText);
+
+  int finded = 0;
+  int j = 0;
+  int indice = -1;
+
+  fread(p, sizeof(struct dados), 1, pFile);
+  while (!feof(pFile)) {
+    if (p->nome != NULL) {
+      indice++;
+      for (j = 0; j < 21 && (nameText[j] != '\0' || p->nome[j] != '\0'); j++) {
+        if (nameText[j] == p->nome[j]) {
+          finded++;
+        }
+
+        else {
+          finded = 0;
+          break;
+        }
+      }
+
+      if (finded != 0) {
+        printf("\n\t%s - %s - %s - %s/%s/%s\n", p->nome, p->email, p->salario, p->dia, p->mes, p->ano);
+        break;
+      }
+    }
+
+    fread(p, sizeof(struct dados), 1, pFile);
+  }
+
+  if (finded == 0) {
+    printf("\n\tNenhum registro foi encontrado.");
+  }
+
+  else {
+    pFile = fopen(filename, "r+");
+
+    cleanArrayChar(&p->nome, 21);
+    cleanArrayChar(&p->email, 31);
+    cleanArrayChar(&p->salario, 11);
+    cleanArrayChar(&p->dia, 3);
+    cleanArrayChar(&p->mes, 3);
+    cleanArrayChar(&p->ano, 5);
+
+    fseek(pFile, sizeof(struct dados) * indice, 0);
+    fwrite(p, sizeof(struct dados), 1, pFile);
+    fclose(pFile);
+
+    printf("\nRegistro deletado!");
+    printf("\n\nPressione qualquer coisa para voltar ao menu... ");
+    getch();
+  }
+
+}
+
 void main() {
   int option = 0;
 
@@ -512,9 +577,9 @@ void main() {
         updateRegister(&p);
         break;
 
-        /*case 9:
-            deleteRegister();
-          break;*/
+      case 9:
+        delete(&p);
+        break;
 
       case 10:
       default:

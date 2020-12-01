@@ -28,16 +28,16 @@ Programa desafio da disciplina Linguagem de Programação I da Fatec Rubens Lara
 
 1) Escreva um programa que tem a estrutura de dados abaixo. O programa tem as seguintes opções de menu:
 
-- [ ] 01 Entrada de dados
-- [ ] 02 Listar dados na tela
-- [ ] 03 Pesquisar um registro pelo nome completo
-- [ ] 04 Pesquisar por email
-- [ ] 05 Pesquisar os aniversariantes de um determinado mês
-- [ ] 06 Pesquisar por faixa salarial
-- [ ] 07 Alterar valor do salário, pesquisado pelo nome completo
-- [ ] 08 Alterar dados, pesquisado pelo nome completo
-- [ ] 09 Excluir dados, pesquisado pelo nome completo
-- [ ] 10 Saída pelo usuário
+- [x] 01 Entrada de dados
+- [x] 02 Listar dados na tela
+- [x] 03 Pesquisar um registro pelo nome completo
+- [x] 04 Pesquisar por email
+- [x] 05 Pesquisar os aniversariantes de um determinado mês
+- [x] 06 Pesquisar por faixa salarial
+- [x] 07 Alterar valor do salário, pesquisado pelo nome completo
+- [x] 08 Alterar dados, pesquisado pelo nome completo
+- [x] 09 Excluir dados, pesquisado pelo nome completo
+- [x] 10 Saída pelo usuário
 
 **Observações**
 - Estrutura: nome, email, data de nascimento, salário
